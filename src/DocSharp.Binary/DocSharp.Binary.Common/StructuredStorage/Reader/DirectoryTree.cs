@@ -128,10 +128,16 @@ namespace DocSharp.Binary.StructuredStorage.Reader
 
             if (path[0] == '\\')
             {
-                return this._directoryEntries.Find(delegate(DirectoryEntry entry) { return entry.Path == path; });
+                return this._directoryEntries.Find(delegate(DirectoryEntry entry)
+                {
+                    return string.Equals(entry.Path, path, StringComparison.OrdinalIgnoreCase);
+                });
             }
 
-            return this._directoryEntries.Find(delegate(DirectoryEntry entry) { return entry.Name == path; });
+            return this._directoryEntries.Find(delegate(DirectoryEntry entry)
+            {
+                return string.Equals(entry.Name, path, StringComparison.OrdinalIgnoreCase);
+            });
         }
 
 

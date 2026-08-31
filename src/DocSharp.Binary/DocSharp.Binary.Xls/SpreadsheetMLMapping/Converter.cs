@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 using DocSharp.Binary.OpenXmlLib;
@@ -15,7 +16,8 @@ namespace DocSharp.Binary.SpreadsheetMLMapping
             var returnType = SpreadsheetDocumentType.Workbook;
 
             //ToDo: Find better way to detect macro type
-            if (xls.Storage.FullNameOfAllEntries.Contains("\\_VBA_PROJECT_CUR"))
+            if (xls.Storage.FullNameOfAllEntries.Any(name =>
+                string.Equals(name, "\\_VBA_PROJECT_CUR", StringComparison.OrdinalIgnoreCase)))
             {
                 if (xls.WorkBookData.Template)
                 {

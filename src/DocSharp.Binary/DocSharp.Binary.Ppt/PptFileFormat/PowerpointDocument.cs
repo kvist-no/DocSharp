@@ -6,6 +6,7 @@ using DocSharp.Binary.StructuredStorage.Reader;
 using DocSharp.Binary.OfficeDrawing;
 using System.Reflection;
 using System.IO;
+using System.Linq;
 
 namespace DocSharp.Binary.PptFileFormat
 {
@@ -134,7 +135,8 @@ namespace DocSharp.Binary.PptFileFormat
             }
 
             // Optional 'Pictures' stream
-            if (file.FullNameOfAllStreamEntries.Contains("\\Pictures"))
+            if (file.FullNameOfAllStreamEntries.Any(
+                name => string.Equals(name, "\\Pictures", StringComparison.OrdinalIgnoreCase)))
             {
                 try
                 {

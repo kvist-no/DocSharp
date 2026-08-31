@@ -20,11 +20,11 @@ namespace DocSharp.Binary.WordprocessingMLMapping
             var vbaClsid = new Guid();
             foreach (var entry in doc.Storage.AllEntries)
             {
-                if (entry.Path == "\\Macros")
+                if (string.Equals(entry.Path, "\\Macros", StringComparison.OrdinalIgnoreCase))
                 {
                     macroClsid = entry.ClsId;
                 }
-                else if(entry.Path == "\\Macros\\VBA")
+                else if(string.Equals(entry.Path, "\\Macros\\VBA", StringComparison.OrdinalIgnoreCase))
                 {
                     vbaClsid = entry.ClsId;
                 }
@@ -39,7 +39,7 @@ namespace DocSharp.Binary.WordprocessingMLMapping
             vba.setClsId(vbaClsid);
             foreach (var entry in doc.Storage.AllStreamEntries)
             {
-                if (entry.Path.StartsWith("\\Macros\\VBA"))
+                if (entry.Path.StartsWith("\\Macros\\VBA", StringComparison.OrdinalIgnoreCase))
                 {
                     vba.AddStreamDirectoryEntry(entry.Name, doc.Storage.GetStream(entry.Path));
                 }

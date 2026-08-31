@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Text;
 using DocSharp.Binary.CommonTranslatorLib;
 using DocSharp.Binary.Spreadsheet.XlsFileFormat.DataContainer;
@@ -51,11 +53,13 @@ namespace DocSharp.Binary.Spreadsheet.XlsFileFormat
             this.WorkBookData = new WorkBookData();
             this.Storage = reader;
 
-            if (reader.FullNameOfAllStreamEntries.Contains("\\" + WORKBOOK))
+            if (reader.FullNameOfAllStreamEntries.Any(name =>
+                string.Equals(name, "\\" + WORKBOOK, StringComparison.OrdinalIgnoreCase)))
             {
                 this.workBookStreamReader = new VirtualStreamReader(reader.GetStream(WORKBOOK));
             }
-            else if (reader.FullNameOfAllStreamEntries.Contains("\\" + ALTERNATE1))
+            else if (reader.FullNameOfAllStreamEntries.Any(name =>
+                string.Equals(name, "\\" + ALTERNATE1, StringComparison.OrdinalIgnoreCase)))
             {
                 this.workBookStreamReader = new VirtualStreamReader(reader.GetStream(ALTERNATE1));
             }

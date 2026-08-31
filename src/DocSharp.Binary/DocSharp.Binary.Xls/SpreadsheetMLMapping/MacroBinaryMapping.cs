@@ -27,11 +27,11 @@ namespace DocSharp.Binary.SpreadsheetMLMapping
             var vbaClsid = new Guid();
             foreach (var entry in xls.Storage.AllEntries)
             {
-                if (entry.Path == this.projectFolder)
+                if (string.Equals(entry.Path, this.projectFolder, StringComparison.OrdinalIgnoreCase))
                 {
                     macroClsid = entry.ClsId;
                 }
-                else if (entry.Path == this.vbaFolder)
+                else if (string.Equals(entry.Path, this.vbaFolder, StringComparison.OrdinalIgnoreCase))
                 {
                     vbaClsid = entry.ClsId;
                 }
@@ -46,7 +46,7 @@ namespace DocSharp.Binary.SpreadsheetMLMapping
             vba.setClsId(vbaClsid);
             foreach (var entry in xls.Storage.AllStreamEntries)
             {
-                if (entry.Path.StartsWith(this.vbaFolder))
+                if (entry.Path.StartsWith(this.vbaFolder, StringComparison.OrdinalIgnoreCase))
                 {
                     vba.AddStreamDirectoryEntry(entry.Name, xls.Storage.GetStream(entry.Path));
                 }

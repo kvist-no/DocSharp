@@ -63,9 +63,16 @@ namespace DocSharp.Binary.OpenXmlLib
                 {
                     string rootPath = Path.GetFullPath(".");
                     string resolvedPath = Path.GetFullPath(path);
-                    if (resolvedPath.StartsWith(rootPath))
+                    string rootWithSeparator = rootPath.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal)
+                        ? rootPath
+                        : rootPath + Path.DirectorySeparatorChar;
+                    if (string.Equals(resolvedPath, rootPath, StringComparison.Ordinal))
                     {
-                        path = resolvedPath.Substring(rootPath.Length + 1);
+                        path = "";
+                    }
+                    else if (resolvedPath.StartsWith(rootWithSeparator, StringComparison.Ordinal))
+                    {
+                        path = resolvedPath.Substring(rootWithSeparator.Length);
                     }
                 }
 

@@ -70,7 +70,7 @@ namespace DocSharp.Binary.WordprocessingMLMapping
             this.Streams = new Dictionary<string, VirtualStream>();
             foreach (string streamname in docStorage.FullNameOfAllStreamEntries)
             {
-                if (streamname.StartsWith(this.Path))
+                if (streamname.StartsWith(this.Path, StringComparison.OrdinalIgnoreCase))
                 {
                     this.Streams.Add(streamname.Substring(streamname.LastIndexOf("\\") + 1), docStorage.GetStream(streamname));
                 }
